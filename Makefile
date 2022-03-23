@@ -11,9 +11,32 @@ endif
 PKG      := $(shell go list ./version)
 GIT_INFO := $(shell govvv -flags -pkg $(PKG))
 
+
+ifneq "$(findstring cilium, $(MAKECMDGOALS))" ""
+BUILD_TAG := -tags cilium
+endif
+
+ifneq "$(findstring kubearmor, $(MAKECMDGOALS))" ""
+BUILD_TAG := -tags kubearmor
+endif
+
+ifneq "$(findstring discovery, $(MAKECMDGOALS))" ""
+BUILD_TAG := -tags discovery
+endif
+
 .PHONY: build
 build:
-	cd $(CURDIR); go mod tidy; CGO_ENABLED=0 go build -ldflags "-w -s ${GIT_INFO}" -o karmor
+	cd $(CURDIR); go mod tidy; CGO_ENABLED=0 go build -ldflags "-w -s ${GIT_INFO}" -tags "cilium kubearmor discovery" -o karmor
+
+cilium:
+	cd $(CURDIR); go mod tidy; CGO_ENABLED=0 go build -ldflags "-w -s ${GIT_INFO}" ${BUILD_TAG} -o karmor
+
+kubearmor:
+	cd $(CURDIR); go mod tidy; CGO_ENABLED=0 go build -ldflags "-w -s ${GIT_INFO}" ${BUILD_TAG} -o karmor
+
+discovery:
+	cd $(CURDIR); go mod tidy; CGO_ENABLED=0 go build -ldflags "-w -s ${GIT_INFO}" ${BUILD_TAG} -o karmor
+
 
 .PHONY: install
 install: build
