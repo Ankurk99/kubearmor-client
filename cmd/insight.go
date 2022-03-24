@@ -1,0 +1,35 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2021 Authors of KubeArmor
+
+//go:build insight
+// +build insight
+
+package cmd
+
+import (
+	"github.com/kubearmor-client/insight"
+	"github.com/spf13/cobra"
+)
+
+var insightOptions insight.Options
+
+// insightCmd represents the insight command
+var insightCmd = &cobra.Command{
+	Use:   "insight",
+	Short: "Observe policy from the discovery engine",
+	Long:  `Observe policy from the discovery engine`,
+	RunE: func(cmd *cobra.Command, args []string) error {
+		insight.StopChan = make(chan struct{})
+		if err := insight.StartObserver(insightOptions); err != nil {
+			return err
+		}
+		return nil
+	},
+}
+
+func init() {
+	rootCmd.AddCommand(insightCmd)
+
+	insightCmd.Flags().StringVar(&insightOptions.GRPC, "gRPC", "", "gRPC server information")
+	insightCmd.Flags().BoolVar(&insightOptions.JSON, "json", false, "Flag to print alerts and logs in the JSON format")
+}

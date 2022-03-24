@@ -26,7 +26,7 @@ endif
 
 .PHONY: build
 build:
-	cd $(CURDIR); go mod tidy; CGO_ENABLED=0 go build -ldflags "-w -s ${GIT_INFO}" -tags "cilium kubearmor discovery" -o karmor
+	cd $(CURDIR); go mod tidy; CGO_ENABLED=0 go build -ldflags "-w -s ${GIT_INFO}" -tags "cilium kubearmor insight" -o karmor
 
 cilium:
 	cd $(CURDIR); go mod tidy; CGO_ENABLED=0 go build -ldflags "-w -s ${GIT_INFO}" ${BUILD_TAG} -o karmor
@@ -34,7 +34,7 @@ cilium:
 kubearmor:
 	cd $(CURDIR); go mod tidy; CGO_ENABLED=0 go build -ldflags "-w -s ${GIT_INFO}" ${BUILD_TAG} -o karmor
 
-discovery:
+insight:
 	cd $(CURDIR); go mod tidy; CGO_ENABLED=0 go build -ldflags "-w -s ${GIT_INFO}" ${BUILD_TAG} -o karmor
 
 
@@ -49,6 +49,9 @@ clean:
 .PHONY: protobuf
 vm-protobuf:
 	cd $(CURDIR)/vm/protobuf; protoc --proto_path=. --go_opt=paths=source_relative --go_out=plugins=grpc:. vm.proto
+
+insight-protobuf:
+	cd $(CURDIR)/insight/protobuf; protoc --proto_path=. --go_opt=paths=source_relative --go_out=plugins=grpc:. insight.proto
 
 .PHONY: gofmt
 gofmt:
