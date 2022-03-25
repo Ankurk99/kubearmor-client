@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2021 Authors of KubeArmor
+// Copyright 2022 Authors of KubeArmor
 
 //go:build insight
 // +build insight
@@ -13,8 +13,6 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
-
-	// import protobuf from policy discovery
 
 	"google.golang.org/grpc"
 )
@@ -68,7 +66,7 @@ func StartObserver(o Options) error {
 	client := NewObservabilityClient(conn)
 
 	// var response opb.Response
-	response := client.SysObservabilityData(context.Background(), &Data.Request)
+	response := client.SysObservabilityData(context.Background(), &Data.request)
 
 	log.Printf("%v", response)
 

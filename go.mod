@@ -2,7 +2,11 @@ module github.com/kubearmor-client
 
 go 1.17
 
-replace github.com/kubearmor/KubeArmor/deployments => ../KubeArmor/deployments
+replace (
+	github.com/kubearmor-client/insight => ./insight
+	github.com/kubearmor-client/insight/protobuf => ./insight/protobuf
+	github.com/kubearmor/kubearmor-client => ./
+)
 
 require (
 	github.com/cilium/cilium v1.10.0
@@ -39,7 +43,7 @@ require (
 	github.com/PuerkitoBio/purell v1.1.1 // indirect
 	github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578 // indirect
 	github.com/StackExchange/wmi v1.2.1 // indirect
-	github.com/andybalholm/brotli v1.0.1 // indirect
+	github.com/andybalholm/brotli v1.0.4 // indirect
 	github.com/asaskevich/govalidator v0.0.0-20210307081110-f21760c49a8d // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/blang/semver/v4 v4.0.0 // indirect

@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-# Copyright 2021 Authors of KubeArmor
+# Copyright 2022 Authors of KubeArmor
 
 CURDIR     := $(shell pwd)
 INSTALLDIR := $(shell go env GOPATH)/bin/
@@ -20,8 +20,8 @@ ifneq "$(findstring kubearmor, $(MAKECMDGOALS))" ""
 BUILD_TAG := -tags kubearmor
 endif
 
-ifneq "$(findstring discovery, $(MAKECMDGOALS))" ""
-BUILD_TAG := -tags discovery
+ifneq "$(findstring insight, $(MAKECMDGOALS))" ""
+BUILD_TAG := -tags insight
 endif
 
 .PHONY: build
