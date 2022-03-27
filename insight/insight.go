@@ -14,6 +14,7 @@ import (
 	"os/signal"
 	"syscall"
 
+	opb "github.com/kubearmor-client/insight/protobuf"
 	"google.golang.org/grpc"
 )
 
@@ -62,13 +63,23 @@ func StartObserver(o Options) error {
 		log.Fatalf("could not connect: %v", err)
 	}
 	defer conn.Close()
+	// listen for interrupt signals
 
-	client := NewObservabilityClient(conn)
+	client := opb.NewObservabilityClient(conn)
 
+	data := &opb.Data{
+		ClusterName:   "",
+		ContainerName: "",
+		Labels:        "",
+		FromSource:    "",
+		Duration:      "",
+		Request:       "observe",
+		Namespace:     "explorer",
+	}
 	// var response opb.Response
-	response := client.SysObservabilityData(context.Background(), &Data.request)
+	response, err := client.SysObservabilityData(context.Background(), data)
 
-	log.Printf("%v", response)
+	log.Printf("%v %v", data, response)
 
 	// listen for interrupt signals
 	sigChan := GetOSSigChannel()

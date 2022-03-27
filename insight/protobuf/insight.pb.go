@@ -503,7 +503,7 @@ func NewObservabilityClient(cc grpc.ClientConnInterface) ObservabilityClient {
 
 func (c *observabilityClient) SysObservabilityData(ctx context.Context, in *Data, opts ...grpc.CallOption) (*Response, error) {
 	out := new(Response)
-	err := c.cc.Invoke(ctx, "/insight.Observability/SysObservabilityData", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.observability.Observability/SysObservabilityData", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}

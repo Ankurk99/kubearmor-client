@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package insight;
+package v1.observability;
 
 option go_package = "github.com/kubearmor-client/insight/protobuf";
 
