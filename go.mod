@@ -4,11 +4,16 @@ go 1.17
 
 replace (
 	github.com/kubearmor-client/insight => ./insight
-	github.com/kubearmor-client/insight/protobuf => ./insight/protobuf
 	github.com/kubearmor/kubearmor-client => ./
+	github.com/optiopay/kafka => github.com/cilium/kafka v0.0.0-20180809090225-01ce283b732b
+	k8s.io/api => k8s.io/api v0.22.3
+	k8s.io/apimachinery => k8s.io/apimachinery v0.22.3
+	k8s.io/cli-runtime => k8s.io/cli-runtime v0.22.3
+	k8s.io/client-go => k8s.io/client-go v0.22.3
 )
 
 require (
+	github.com/accuknox/auto-policy-discovery/src v0.0.0-20220322162637-bfb72ecbf61b
 	github.com/cilium/cilium v1.10.0
 	github.com/kubearmor/KVMService/src/types v0.0.0-20220228115540-2211247620dd
 	github.com/kubearmor/KubeArmor/KubeArmor v0.0.0-20220321102834-0971f727bd8a
@@ -16,7 +21,7 @@ require (
 	github.com/kubearmor/KubeArmor/pkg/KubeArmorHostPolicy v0.0.0-20220321102834-0971f727bd8a
 	github.com/kubearmor/KubeArmor/pkg/KubeArmorPolicy v0.0.0-20220321102834-0971f727bd8a
 	github.com/kubearmor/KubeArmor/protobuf v0.0.0-20220321102834-0971f727bd8a
-	github.com/kubearmor/kubearmor-client v0.6.4
+	github.com/kubearmor/kubearmor-client v0.0.0-00010101000000-000000000000
 	github.com/mholt/archiver/v3 v3.5.1
 	github.com/rs/zerolog v1.26.1
 	github.com/spf13/cobra v1.4.0
@@ -24,11 +29,11 @@ require (
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
 	google.golang.org/grpc v1.45.0
 	google.golang.org/protobuf v1.28.0
-	k8s.io/api v0.22.3
+	k8s.io/api v0.23.5
 	k8s.io/apiextensions-apiserver v0.22.3
-	k8s.io/apimachinery v0.22.3
+	k8s.io/apimachinery v0.23.5
 	k8s.io/cli-runtime v0.22.3
-	k8s.io/client-go v0.22.3
+	k8s.io/client-go v11.0.0+incompatible
 	sigs.k8s.io/yaml v1.3.0
 )
 

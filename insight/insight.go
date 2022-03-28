@@ -14,7 +14,7 @@ import (
 	"log"
 	"os"
 
-	opb "github.com/kubearmor-client/insight/protobuf"
+	opb "github.com/accuknox/auto-policy-discovery/src/protobuf/v1/observability"
 	"google.golang.org/grpc"
 )
 
