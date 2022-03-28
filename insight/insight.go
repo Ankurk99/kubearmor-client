@@ -24,9 +24,9 @@ type Options struct {
 	GRPC          string
 	Clustername   string
 	Labels        string
+	Fromsource    string
 	Containername string
 	Namespace     string
-	JSON          bool
 }
 
 // StopChan Channel
@@ -63,8 +63,12 @@ func StartObserver(o Options) error {
 	fmt.Println("gRPC server: " + gRPC)
 
 	data := &opb.Data{
-		Request:   "observe",
-		Namespace: o.Namespace,
+		Request:       "observe",
+		ClusterName:   o.Clustername,
+		Labels:        o.Labels,
+		ContainerName: o.Containername,
+		Namespace:     o.Namespace,
+		FromSource:    o.Fromsource,
 	}
 
 	// create a client
@@ -80,12 +84,11 @@ func StartObserver(o Options) error {
 	// var response opb.Response
 	response, err := client.SysObservabilityData(context.Background(), data)
 
-	// log.Printf("%v\n", response)
 	str := ""
-	arr, _ := json.Marshal(response)
+	arr, _ := json.MarshalIndent(response, "", "    ")
 	str = fmt.Sprintf("%s\n", string(arr))
 
-	log.Printf("%s\n", str)
+	log.Printf("%s \n", str)
 
 	// listen for interrupt signals
 	sigChan := GetOSSigChannel()
