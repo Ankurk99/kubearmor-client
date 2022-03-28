@@ -1,6 +1,3 @@
-//go:build cilium
-// +build cilium
-
 package vm
 
 import (

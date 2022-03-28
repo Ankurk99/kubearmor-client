@@ -1,10 +1,10 @@
-module github.com/kubearmor-client
+module github.com/kubearmor/kubearmor-client
 
 go 1.17
 
 replace (
-	github.com/kubearmor-client/insight => ./insight
 	github.com/kubearmor/kubearmor-client => ./
+	github.com/kubearmor/kubearmor-client/insight => ./insight
 	github.com/optiopay/kafka => github.com/cilium/kafka v0.0.0-20180809090225-01ce283b732b
 	k8s.io/api => k8s.io/api v0.22.3
 	k8s.io/apimachinery => k8s.io/apimachinery v0.22.3
@@ -21,7 +21,6 @@ require (
 	github.com/kubearmor/KubeArmor/pkg/KubeArmorHostPolicy v0.0.0-20220321102834-0971f727bd8a
 	github.com/kubearmor/KubeArmor/pkg/KubeArmorPolicy v0.0.0-20220321102834-0971f727bd8a
 	github.com/kubearmor/KubeArmor/protobuf v0.0.0-20220321102834-0971f727bd8a
-	github.com/kubearmor/kubearmor-client v0.0.0-00010101000000-000000000000
 	github.com/mholt/archiver/v3 v3.5.1
 	github.com/rs/zerolog v1.26.1
 	github.com/spf13/cobra v1.4.0

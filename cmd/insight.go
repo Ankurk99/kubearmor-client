@@ -4,7 +4,7 @@
 package cmd
 
 import (
-	"github.com/kubearmor-client/insight"
+	"github.com/kubearmor/kubearmor-client/insight"
 	"github.com/spf13/cobra"
 )
 
