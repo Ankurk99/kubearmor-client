@@ -8,6 +8,7 @@ package insight
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"log"
 	"os"
@@ -20,8 +21,12 @@ import (
 
 // Options Structure
 type Options struct {
-	GRPC string
-	JSON bool
+	GRPC          string
+	Clustername   string
+	Labels        string
+	Containername string
+	Namespace     string
+	JSON          bool
 }
 
 // StopChan Channel
@@ -57,6 +62,11 @@ func StartObserver(o Options) error {
 
 	fmt.Println("gRPC server: " + gRPC)
 
+	data := &opb.Data{
+		Request:   "observe",
+		Namespace: o.Namespace,
+	}
+
 	// create a client
 	conn, err := grpc.Dial(gRPC, grpc.WithInsecure())
 	if err != nil {
@@ -67,19 +77,15 @@ func StartObserver(o Options) error {
 
 	client := opb.NewObservabilityClient(conn)
 
-	data := &opb.Data{
-		ClusterName:   "",
-		ContainerName: "",
-		Labels:        "",
-		FromSource:    "",
-		Duration:      "",
-		Request:       "observe",
-		Namespace:     "explorer",
-	}
 	// var response opb.Response
 	response, err := client.SysObservabilityData(context.Background(), data)
 
-	log.Printf("%v %v", data, response)
+	// log.Printf("%v\n", response)
+	str := ""
+	arr, _ := json.Marshal(response)
+	str = fmt.Sprintf("%s\n", string(arr))
+
+	log.Printf("%s\n", str)
 
 	// listen for interrupt signals
 	sigChan := GetOSSigChannel()

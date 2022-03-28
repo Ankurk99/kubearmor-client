@@ -28,5 +28,9 @@ func init() {
 	rootCmd.AddCommand(insightCmd)
 
 	insightCmd.Flags().StringVar(&insightOptions.GRPC, "gRPC", "", "gRPC server information")
-	insightCmd.Flags().BoolVar(&insightOptions.JSON, "json", false, "Flag to print alerts and logs in the JSON format")
+	insightCmd.Flags().StringVar(&insightOptions.GRPC, "labels", "", "Labels for resources")
+	insightCmd.Flags().StringVar(&insightOptions.GRPC, "containername", "", "Filter according to the Container name")
+	insightCmd.Flags().StringVar(&insightOptions.GRPC, "clustername", "", "Filter according to the Cluster name")
+	insightCmd.Flags().StringVarP(&insightOptions.Namespace, "namespace", "n", "explorer", "Namespace for resources")
+	insightCmd.Flags().BoolVar(&insightOptions.JSON, "json", true, "Flag to print alerts and logs in the JSON format")
 }
