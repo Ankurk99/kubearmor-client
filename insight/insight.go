@@ -55,7 +55,7 @@ func StartInsight(o Options) error {
 	// create a client
 	conn, err := grpc.Dial(gRPC, grpc.WithInsecure())
 	if err != nil {
-		return errors.New("Could not connect to the server. Possible troubleshooting:\n- Check if discovery engine is running\n- Create a portforward to discovery engine service using\n\t\033[1mkubectl port-forward -n explorer service/knoxautopolicy --address 0.0.0.0 --address :: 9089:9089\033[0m\n- Configure grpc server information using\n\t\033[1mkarmor log --grpc <info>\033[0m")
+		return nil
 	}
 	defer conn.Close()
 
@@ -63,6 +63,9 @@ func StartInsight(o Options) error {
 
 	// var response opb.Response
 	response, err := client.SysObservabilityData(context.Background(), data)
+	if err != nil {
+		return errors.New("Could not connect to the server. Possible troubleshooting:\n- Check if discovery engine is running\n- Create a portforward to discovery engine service using\n\t\033[1mkubectl port-forward -n explorer service/knoxautopolicy --address 0.0.0.0 --address :: 9089:9089\033[0m\n- Configure grpc server information using\n\t\033[1mkarmor log --grpc <info>\033[0m")
+	}
 
 	str := ""
 	arr, _ := json.MarshalIndent(response, "", "    ")
