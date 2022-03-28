@@ -13,8 +13,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"os/signal"
-	"syscall"
 
 	opb "github.com/kubearmor-client/insight/protobuf"
 	"google.golang.org/grpc"
@@ -28,23 +26,6 @@ type Options struct {
 	Clustername   string
 	Fromsource    string
 	Namespace     string
-}
-
-// StopChan Channel
-var StopChan chan struct{}
-
-// GetOSSigChannel Function
-func GetOSSigChannel() chan os.Signal {
-	c := make(chan os.Signal, 1)
-
-	signal.Notify(c,
-		syscall.SIGHUP,
-		syscall.SIGINT,
-		syscall.SIGTERM,
-		syscall.SIGQUIT,
-		os.Interrupt)
-
-	return c
 }
 
 func StartInsight(o Options) error {
@@ -88,11 +69,6 @@ func StartInsight(o Options) error {
 	str = fmt.Sprintf("%s\n", string(arr))
 
 	log.Printf("%s \n", str)
-
-	// listen for interrupt signals
-	sigChan := GetOSSigChannel()
-	<-sigChan
-	close(StopChan)
 
 	return nil
 }

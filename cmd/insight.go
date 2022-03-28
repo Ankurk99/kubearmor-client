@@ -16,7 +16,6 @@ var insightCmd = &cobra.Command{
 	Short: "Observe policy from the discovery engine",
 	Long:  `Observe policy from the discovery engine`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		insight.StopChan = make(chan struct{})
 		if err := insight.StartInsight(insightOptions); err != nil {
 			return err
 		}
