@@ -9,6 +9,7 @@ package insight
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log"
 	"os"
@@ -22,10 +23,10 @@ import (
 // Options Structure
 type Options struct {
 	GRPC          string
-	Clustername   string
 	Labels        string
-	Fromsource    string
 	Containername string
+	Clustername   string
+	Fromsource    string
 	Namespace     string
 }
 
@@ -46,8 +47,7 @@ func GetOSSigChannel() chan os.Signal {
 	return c
 }
 
-// StartObserver Function
-func StartObserver(o Options) error {
+func StartInsight(o Options) error {
 	gRPC := ""
 
 	if o.GRPC != "" {
@@ -64,20 +64,19 @@ func StartObserver(o Options) error {
 
 	data := &opb.Data{
 		Request:       "observe",
-		ClusterName:   o.Clustername,
 		Labels:        o.Labels,
 		ContainerName: o.Containername,
-		Namespace:     o.Namespace,
+		ClusterName:   o.Clustername,
 		FromSource:    o.Fromsource,
+		Namespace:     o.Namespace,
 	}
 
 	// create a client
 	conn, err := grpc.Dial(gRPC, grpc.WithInsecure())
 	if err != nil {
-		log.Fatalf("could not connect: %v", err)
+		return errors.New("Could not connect to the server. Possible troubleshooting:\n- Check if discovery engine is running\n- Create a portforward to discovery engine service using\n\t\033[1mkubectl port-forward -n explorer service/knoxautopolicy --address 0.0.0.0 --address :: 9089:9089\033[0m\n- Configure grpc server information using\n\t\033[1mkarmor log --grpc <info>\033[0m")
 	}
 	defer conn.Close()
-	// listen for interrupt signals
 
 	client := opb.NewObservabilityClient(conn)
 
