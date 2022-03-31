@@ -11,32 +11,9 @@ endif
 PKG      := $(shell go list ./version)
 GIT_INFO := $(shell govvv -flags -pkg $(PKG))
 
-
-ifneq "$(findstring cilium, $(MAKECMDGOALS))" ""
-BUILD_TAG := -tags cilium
-endif
-
-ifneq "$(findstring kubearmor, $(MAKECMDGOALS))" ""
-BUILD_TAG := -tags kubearmor
-endif
-
-ifneq "$(findstring insight, $(MAKECMDGOALS))" ""
-BUILD_TAG := -tags insight
-endif
-
 .PHONY: build
 build:
-	cd $(CURDIR); go mod tidy; CGO_ENABLED=0 go build -ldflags "-w -s ${GIT_INFO}" -tags "cilium kubearmor insight" -o karmor
-
-cilium:
-	cd $(CURDIR); go mod tidy; CGO_ENABLED=0 go build -ldflags "-w -s ${GIT_INFO}" ${BUILD_TAG} -o karmor
-
-kubearmor:
-	cd $(CURDIR); go mod tidy; CGO_ENABLED=0 go build -ldflags "-w -s ${GIT_INFO}" ${BUILD_TAG} -o karmor
-
-insight:
-	cd $(CURDIR); go mod tidy; CGO_ENABLED=0 go build -ldflags "-w -s ${GIT_INFO}" ${BUILD_TAG} -o karmor
-
+	cd $(CURDIR); go mod tidy; CGO_ENABLED=0 go build -ldflags "-w -s ${GIT_INFO}" -o karmor
 
 .PHONY: install
 install: build
@@ -49,9 +26,6 @@ clean:
 .PHONY: protobuf
 vm-protobuf:
 	cd $(CURDIR)/vm/protobuf; protoc --proto_path=. --go_opt=paths=source_relative --go_out=plugins=grpc:. vm.proto
-
-insight-protobuf:
-	cd $(CURDIR)/insight/protobuf; protoc --proto_path=. --go_opt=paths=source_relative --go_out=plugins=grpc:. insight.proto
 
 .PHONY: gofmt
 gofmt:

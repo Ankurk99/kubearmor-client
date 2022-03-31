@@ -1,8 +1,9 @@
 module github.com/kubearmor/kubearmor-client
 
-go 1.17
+go 1.18
 
 replace (
+	github.com/accuknox/auto-policy-discovery/src => ../auto-policy-discovery/src
 	github.com/kubearmor/kubearmor-client => ./
 	github.com/kubearmor/kubearmor-client/insight => ./insight
 	github.com/optiopay/kafka => github.com/cilium/kafka v0.0.0-20180809090225-01ce283b732b
